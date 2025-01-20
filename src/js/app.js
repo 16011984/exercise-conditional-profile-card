@@ -23,7 +23,8 @@ import "../style/index.css";
     }
  */
 function render(variables = {}) {
-  console.log("These are the current variables: ", variables); // print on the console
+  console.log("These are the current variables: ", variables);
+  // print on the console
   // here we ask the logical questions to make decisions on how to build the html
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
@@ -33,9 +34,14 @@ function render(variables = {}) {
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
+
+          <h1>${variables.name || `Nombre`} ${variables.lastName ||
+    `apellido`}</h1>
+
+          <h2>${variables.role || `Role`}</h2>
+
+          <h3>${variables.city || `City`} ${variables.country || `Country`}</h3>
+
           <ul class="position-right">
             <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
             <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
@@ -70,7 +76,7 @@ window.onload = function() {
     country: null,
     city: null
   };
-  render(window.variables); // render the card for the first time
+  render(window.variables.value); // render the card for the first time
 
   document.querySelectorAll(".picker").forEach(function(elm) {
     elm.addEventListener("change", function(e) {
@@ -85,6 +91,7 @@ window.onload = function() {
           : this.value == "false"
           ? false
           : this.value;
+
       render(Object.assign(window.variables, values)); // render again the card with new values
     });
   });
